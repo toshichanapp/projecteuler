@@ -1,15 +1,3 @@
-target = 600851475143
+require 'prime'
 
-i = 2
-
-primes = []
-while target > 1
-  if target % i == 0
-    primes << i
-    target = target / i
-  else
-    i += 1
-  end
-end
-
-puts primes.uniq.max
+Prime.prime_division(600851475143).flatten.max
