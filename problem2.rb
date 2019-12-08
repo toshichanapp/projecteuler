@@ -1,17 +1,12 @@
-def make_fib(arr, max)
+def create_fib_arr(first: 1, second: 2, limit: 4_000_000)
+  arr = [first, second]
+
   while true
-    next_fib = arr[-1] + arr[-2]
-    if next_fib < max
-      arr << next_fib
-    else
-      return arr
-    end
+    sum = arr[-1] + arr[-2]
+    break if sum >= limit
+    arr << sum
   end
+  arr
 end
 
-
-init = [1, 2]
-fib = make_fib(init, 4_000_000)
-even_fib = fib.select(&:even?)
-
-puts even_fib.reduce(:+)
+puts create_fib_arr.select{|num| num % 2 == 0 }.sum
