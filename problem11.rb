@@ -21,8 +21,6 @@ texts = <<~EOF
 01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48
 EOF
 
-binding.irb
-
 # 縦
 tate = texts.split.map(&:to_i).each_slice(20).lazy.flat_map do |line|
   line.each_cons(4).select{ |candidate| candidate.all?{ |num| num.positive? }}.map{ |arr| arr.reduce(:*) }

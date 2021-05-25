@@ -20,8 +20,7 @@ def calc_factors_quantity(num)
   end
 end
 
-n = 2
-while true
+3.upto(Float::INFINITY) do |n|
   fn = calc_factors_quantity(n)
 
   if fn >= 500
@@ -30,5 +29,4 @@ while true
   end
 
   @divisor_quantities[n * (n+1)/2] = fn
-  n += 1
 end
