@@ -17,6 +17,7 @@ class Integer
   end
 
   # 真の約数の総和
+  # use next if self.prime?
   def sum_true_divisors
     sum_divisors - self
   end
