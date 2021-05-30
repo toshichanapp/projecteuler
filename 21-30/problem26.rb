@@ -1,21 +1,39 @@
 require 'prime'
 
-# 循環小数になりえる数字は訳文して分母に2, 5以外の数字があるもの
-candidates = (1...1000).select do |num|
-  Prime.prime_division(num).any?{ |p, _| p == 2 || p == 5 }
+# http://www.asahi-net.or.jp/~kc2h-msm/mathland/math05/math0502.htm
+# 例えば、１割る７、の計算手順は以下のようになる。
+#
+# 1/7=0 余り 1
+# 1 の右に 0 を置き、10/7 を計算する。
+# 10/7=1 余り 3
+# 3 の右に 0 を置き、30/7 を計算する。
+# ……
+#
+# このように「余りの右に 0 を付けて 7 で割る」という操作を繰り返す。
+# 余りが 1 になったら、始めの 1/7 に戻ったことになるので、そこで循環したことになる。
+def count(num)
+  n = 10
+  count = 0
+  until n % num == 1
+    n = n * 10
+    count += 1
+  end
+
+  count
 end
-#
-# @memo = {}
-# candidates.map do |num|
-#   hoge = '9'
-#   remain = -1
-#   count = 0
-#   while remain != 0
-#     remain = hoge.to_i % num
-#     count += 1
-#     hoge << '9'
-#   end
-#   @memo[num] = count
-# end
-#
-# p @memo
+
+candidates = (1...1000).select do |num|
+  Prime.prime?(num)
+end
+
+memo = {}
+max = 0
+candidates.reverse.each do |num|
+  # 循環節の長さはp-1の約数なので、分母の数より大きくなることはない
+  break if max > num
+  c = count(num)
+  max = max < c ? c : max
+  memo[num] = max
+end
+p memo
+
