@@ -2,8 +2,24 @@ class Integer
   require 'prime'
   # https://qiita.com/norioc/items/5c270ad6ff5d22d1efd0
 
-  def prime?
-    Prime.prime?(self)
+  # これはすでにある
+  # https://docs.ruby-lang.org/ja/latest/method/Integer/i/prime=3f.html
+  # def prime?
+  #   Prime.prime?(self)
+  # end
+
+  # 約数の列挙
+  # https://github.com/universato/ruby-prime/commit/b54f2fcb4a3658183e068e66898df4be3ebbbfde
+  def divisors
+    if prime?
+      [1, self]
+    elsif self == 1
+      [1]
+    else
+      xs = prime_division.map{ |p, n| Array.new(n + 1){ |e| p**e } }
+      x = xs.pop
+      x.product(*xs).map{ |t| t.inject(:*) }.sort
+    end
   end
 
   # 約数の個数
